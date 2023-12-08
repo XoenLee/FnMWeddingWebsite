@@ -1,0 +1,15 @@
+{
+  "name": "weddingwebsite",
+  "version": "1.0.0",
+  "description": "Frederick &amp; Marlie's Wedding",
+  "main": "createCustomIdentifiers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "swiper": "^11.0.5"
+  }
+}

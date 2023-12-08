@@ -226,7 +226,8 @@ p strong {
     width: 50%;
     padding: 15px 15px 25px 0;
     border-radius: 5px;
-    background: linear-gradient(to left, rgba(0, 0, 0, 0.7) , rgba(255, 255, 255, 0) 50%); 
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.7) , rgba(255, 255, 255, 0) 50%);
+    z-index: 2;
 }
 
 .container-2 {
@@ -301,7 +302,7 @@ div.quotes {
     width: 95%;
 }
 
-.rsvp a, .rsvp2 a, .rsvp3 a {
+.rsvp a {
     text-decoration: none;
     color: #fff;
     font-weight: 500;
@@ -312,7 +313,7 @@ div.quotes {
     border-radius: 5px;
 }
 
-.rsvp a:hover, .rsvp2 a:hover, .rsvp3 a:hover {
+.rsvp a:hover {
     border-radius: 5px;
     border: none;
     background-color: #1c2263;

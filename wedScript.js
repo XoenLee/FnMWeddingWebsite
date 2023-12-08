@@ -9,86 +9,62 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // slider 
 
-    const slider = document.querySelector(".slider");
-    const nextBtn = document.querySelector(".next-btn");
-    
-    const prevBtn = document.querySelector(".prev-btn");
-    const slides = document.querySelectorAll(".slide");
-    const slideIcons = document.querySelectorAll(".slide-icon");
-    const numberOfSlides = slides.length;
-    var slideNumber = 0;
+const slider = document.querySelector(".slider");
+const nextBtn = document.querySelector(".next-btn");
+const prevBtn = document.querySelector(".prev-btn");
+const slides = document.querySelectorAll(".slide");
+const slideIcons = document.querySelectorAll(".slide-icon");
+const numberOfSlides = slides.length;
+var slideNumber = 0;
 
-    //image slider next button
-    nextBtn.addEventListener("click", () => {
-        slides.forEach((slide) => {
-        slide.classList.remove("active");
-        });
-        slideIcons.forEach((slideIcon) => {
-            slideIcon.classList.remove("active");
-        });
+// Set initial z-index for the first slide
+slides[slideNumber].style.zIndex = 2;
 
-        slideNumber++;
+//image slider next button
+nextBtn.addEventListener("click", () => {
+    changeSlide(slideNumber + 1);
+});
 
-        if(slideNumber > (numberOfSlides - 1)){
-        slideNumber = 0;
-        }
+//image slider previous button
+prevBtn.addEventListener("click", () => {
+    changeSlide(slideNumber - 1);
+});
 
-        slides[slideNumber].classList.add("active");
-        slideIcons[slideNumber].classList.add("active");
-    });
+//image slider autoplay
+var playSlider;
 
-    //image slider previous button
-    prevBtn.addEventListener("click", () => {
-        slides.forEach((slide) => {
-            slide.classList.remove("active");
-        });
-        slideIcons.forEach((slideIcon) => {
-            slideIcon.classList.remove("active");
-        });
+var repeater = () => {
+    playSlider = setInterval(function () {
+        changeSlide(slideNumber + 1);
+    }, 4000);
+};
+repeater();
 
-        slideNumber--;
+// stop the image slider autoplay on mouseover
+slider.addEventListener("mouseover", () => {
+    clearInterval(playSlider);
+});
 
-        if(slideNumber < 0){
-            slideNumber = numberOfSlides - 1;
-        }
-
-        slides[slideNumber].classList.add("active");
-        slideIcons[slideNumber].classList.add("active");
-    });
-
-    //image slider autoplay
-    var playSlider;
-
-    var repeater = () => {
-        playSlider = setInterval(function(){
-            slides.forEach((slide) => {
-                slide.classList.remove("active");
-            });
-            slideIcons.forEach((slideIcon) => {
-                slideIcon.classList.remove("active");
-            });
-
-        slideNumber++;
-
-        if(slideNumber > (numberOfSlides - 1)){
-            slideNumber = 0;
-        }
-
-            slides[slideNumber].classList.add("active");
-            slideIcons[slideNumber].classList.add("active");
-        }, 4000);
-    }
+// start the image slider autoplay again on mouseout
+slider.addEventListener("mouseout", () => {
     repeater();
+});
 
-    //stop the image slider autoplay on mouseover
-    slider.addEventListener("mouseover", () => {
-        clearInterval(playSlider);
+// function to change slide
+function changeSlide(newSlideNumber) {
+    slides.forEach((slide, index) => {
+        slide.classList.remove("active");
+        slide.style.zIndex = 1; // Set default z-index for non-active slides
+        slideIcons[index].classList.remove("active");
     });
 
-    //start the image slider autoplay again on mouseout
-    slider.addEventListener("mouseout", () => {
-        repeater();
-    });
+    slideNumber = (newSlideNumber + numberOfSlides) % numberOfSlides;
+
+    slides[slideNumber].classList.add("active");
+    slides[slideNumber].style.zIndex = 2; // Set higher z-index for active slide
+    slideIcons[slideNumber].classList.add("active");
+}
+
 
 // countdown
 //

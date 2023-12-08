@@ -15,17 +15,19 @@ firebase.initializeApp(firebaseConfig);
 // Step 1: Retrieve custom identifier from the URL
 const urlParams = new URLSearchParams(window.location.search);
 const customIdentifier = urlParams.get('user');
-var userId = customIdentifier;
+let userId;
 
 // Step 2: Access user data from Firebase
 if (customIdentifier) {
   const customIdentifiersRef = firebase.database().ref('customIdentifiers');
   customIdentifiersRef.child(customIdentifier).once('value')
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       if (snapshot.exists()) {
-        const userId = snapshot.val();
+        // Use snapshot.val() to get the userId
+        userId = snapshot.val();
+
         // Your existing code for fetching user data goes here
-        firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
           if (snapshot.exists()) {
             var name = snapshot.val().name;
             var invitedBy = snapshot.val().invitedBy;
@@ -37,7 +39,7 @@ if (customIdentifier) {
           } else {
             console.log('No data available for this user.');
           }
-        }).catch(function(error) {
+        }).catch(function (error) {
           console.error(error);
         });
 
@@ -45,124 +47,148 @@ if (customIdentifier) {
         var seatsConfirmedInput = document.getElementById('seatsConfirmed');
         var seatsAllotedInput = document.getElementById('seatsAlloted');
 
-        seatsConfirmedInput.addEventListener('input', function(e) {
-    		var confirmedSeats = parseInt(seatsConfirmedInput.value);
-    		var seatsAlloted = parseInt(seatsAllotedInput.value);
+        seatsConfirmedInput.addEventListener('input', function (e) {
+          var confirmedSeats = parseInt(seatsConfirmedInput.value);
+          var seatsAlloted = parseInt(seatsAllotedInput.value);
 
-    		if (confirmedSeats < 1) {
-        	seatsConfirmedInput.value = 1;
-    		} else if (confirmedSeats > seatsAlloted) {
-       		 seatsConfirmedInput.value = seatsAlloted;
-    		}
-		});
+          if (confirmedSeats < 1) {
+            seatsConfirmedInput.value = 1;
+          } else if (confirmedSeats > seatsAlloted) {
+            seatsConfirmedInput.value = seatsAlloted;
+          }
+        });
 
-      // Event listener for the 'attendingOrNot' field
-      document.getElementById('attendingOrNot').addEventListener('change', function(e) {
-        var attending = e.target.value;
-        var seatsAlloted = document.getElementById('cont-seatsAlloted');
-        var invitedBy = document.getElementById('cont-invitedBy');
-        var seatsConfirmed = document.getElementById('cont-seatsConfirmed');
+        // Event listener for the 'attendingOrNot' field
+        document.getElementById('attendingOrNot').addEventListener('change', function (e) {
+          var attending = e.target.value;
+          var seatsAlloted = document.getElementById('cont-seatsAlloted');
+          var invitedBy = document.getElementById('cont-invitedBy');
+          var seatsConfirmed = document.getElementById('cont-seatsConfirmed');
 
-        if (attending === 'yes') {
+          if (attending === 'yes') {
             seatsAlloted.style.display = 'block';
             invitedBy.style.display = 'block';
             seatsConfirmed.style.display = 'block';
-        } else {
+          } else {
             seatsAlloted.style.display = 'none';
             invitedBy.style.display = 'none';
             seatsConfirmed.style.display = 'none';
-        }
-      });
+          }
+        });
 
-      // Function to display the confirmation message
-      function displayConfirmationMessage(userId, attending) {
-        var confirmationMessage = document.getElementById('confirmationMessage');
-        
-        // Fetch the updated value from the database after a short delay
-        setTimeout(function () {
-          firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
-            if (snapshot.exists()) {
-              var updatedConfirmedSeats = snapshot.val().seatsConfirmed;
+        // Function to display the confirmation message
+        function displayConfirmationMessage(userId, attending) {
+          var confirmationMessage = document.getElementById('confirmationMessage');
 
-              if (attending === 'yes') {
-                confirmationMessage.innerHTML = `<img src="photos/lineDivider1.png"></img> <p>Thank you for confirming your attendance!</p><p>We've reserved <strong style="font-weight:600;"> 
-                ${updatedConfirmedSeats} seats </strong>just for you!</p><p>Get ready for an unforgettable celebration – 
+          // Fetch the updated value from the database after a short delay
+          setTimeout(function () {
+            firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
+              if (snapshot.exists()) {
+                var updatedConfirmedSeats = snapshot.val().seatsConfirmed;
+
+                if (attending === 'yes') {
+                  confirmationMessage.innerHTML = `<img src="photos/lineDivider1.png"></img> <p>Thank you for confirming your attendance!</p><p>We've reserved <strong style="font-weight:600;"> 
+                ${updatedConfirmedSeats} seat/s </strong>just for you!</p><p>Get ready for an unforgettable celebration – 
                 can't wait to see you there!</p><br><p>Kindly download using the button below; this will serve as your entry pass to the venue.
                 </p> <p style="padding-top: 20px; font-weight:600;">#FinalLIEgettingMarriedToDEK</p><button id="captureButton" class="styledButton" data-html2canvas-ignore="true">Download Pass</button>
-                `;
-              
-                document.getElementById('captureButton').addEventListener('click', function() {
-                  // Identify the element to capture
-                  const elementToCapture = document.getElementById('confirmationMessage');
-            
-                  // Use html2canvas to capture the content
-                  html2canvas(elementToCapture, {
-                    exclude:['.styledButton'],
-                  }).then(function(canvas) {
-                     // Convert the canvas to a data URL
+                  `;
+
+                  document.getElementById('captureButton').addEventListener('click', function () {
+                    // Identify the element to capture
+                    const elementToCapture = document.getElementById('confirmationMessage');
+
+                    // Use html2canvas to capture the content
+                    html2canvas(elementToCapture, {
+                      exclude: ['.styledButton'],
+                    }).then(function (canvas) {
+                      // Convert the canvas to a data URL
                       const imageDataUrl = canvas.toDataURL('image/png');
-              
+
                       // Create a temporary link and trigger a download
                       const downloadLink = document.createElement('a');
                       downloadLink.href = imageDataUrl;
                       downloadLink.download = 'fnmWeddingConfirmationPass.png';
                       downloadLink.click();
                     });
-                });
-              
-              } else {
-                confirmationMessage.innerHTML = `<p>We understand that you won't be able to make it this time.</p><p>Thank you for letting us know. We hope to see you soon!</p>`;
+                  });
+
+                } else {
+                  confirmationMessage.innerHTML = `<p>We understand that you won't be able to make it this time.</p><p>Thank you for letting us know. We hope to see you soon!</p>`;
+                }
               }
+            }).catch(function (error) {
+              console.error(error);
+            });
+          }, 1000); // Adjust the delay as needed
+        }
+        // Event listener for the form submission
+        document.getElementById('seatForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          // Check if userId is present
+          // Fetch the user data from the database
+          firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
+            if (snapshot.exists()) {
+              var name = document.getElementById('name').value;
+              var invitedBy = document.getElementById('invitedBy').value;
+              var seatsAlloted = document.getElementById('seatsAlloted').value;
+              var confirmedSeats = document.getElementById('seatsConfirmed').value;
+              var attending = document.getElementById('attendingOrNot').value;
+              
+              // Check if attendingOrNot is answered
+              if (attending === '') {
+                alert('Please answer the Attending field.');
+                return;
+              }
+
+              // Check for the presence of required fields
+              if (!name || !invitedBy || !seatsAlloted || (attending === 'yes' && !confirmedSeats)) {
+                alert('Please make sure to fill in all the required fields.');
+                return;
+              }
+
+              // Set confirmedSeats to 0 if attending is 'no'
+              if (attending === 'no') {
+                confirmedSeats = 0;
+              }
+
+              // Update the user data in the database
+              firebase.database().ref('/users/' + userId).update({
+                name: name,
+                invitedBy: invitedBy,
+                seatsAlloted: seatsAlloted,
+                seatsConfirmed: confirmedSeats,
+                attendingOrNot: attending
+              });
+
+              // Optional: You can hide the form or take other actions after submission
+              document.getElementById('seatForm').style.display = 'none';
+
+              // Call the function to display the confirmation message
+              displayConfirmationMessage(userId, attending);
+            } else {
+              console.log('No data available for this user.');
             }
           }).catch(function (error) {
             console.error(error);
           });
-        }, 1000); // Adjust the delay as needed
-      }
-
-      // Event listener for the form submission
-      document.getElementById('seatForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var userId = snapshot.val();
-        var name = document.getElementById('name').value;
-        var invitedBy = document.getElementById('invitedBy').value;
-        var seatsAlloted = document.getElementById('seatsAlloted').value;
-        var confirmedSeats = document.getElementById('seatsConfirmed').value;
-        var attending = document.getElementById('attendingOrNot').value;
-
-        if (!userId || !name || !invitedBy || !seatsAlloted || (attending === 'yes' && !confirmedSeats)) {
-          alert('Please make sure there is a valid user and fill in all the required fields.');
-          return;
-        }
-        // Set confirmedSeats to 0 if attending is 'no'
-        if (attending === 'no') {
-          confirmedSeats = 0;
-        }
-        firebase.database().ref('/users/' + userId).update({
-            name: name,
-            invitedBy: invitedBy,
-            seatsAlloted: seatsAlloted,
-            seatsConfirmed: confirmedSeats,
-            attendingOrNot: attending
         });
-        // Optional: You can hide the form or take other actions after submission
-        document.getElementById('seatForm').style.display = 'none';
-
-        // Call the function to display the confirmation message
-        displayConfirmationMessage(userId, attending);
-      });
 
       } else {
+        
         console.log('Custom identifier not found in the database.');
         // Handle the case where the custom identifier is not found
+        return;
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error(error);
     });
 } else {
-  console.log('Custom identifier not found in the URL.');
+  var submitButton = document.getElementById('submit-button');
+  if (submitButton) {
+      submitButton.disabled = true;
+  }
+  console.log("There's no user data to access.");
   // Handle the case where the custom identifier is not found in the URL
 }
 
-   
