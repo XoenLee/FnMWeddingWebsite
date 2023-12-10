@@ -1272,6 +1272,7 @@ div.html {
   
   .slider .slide.active{
     opacity: 1; /* Make the active slide visible */
+    z-index: 2;
   }
   
   .slider .slide img{
@@ -1332,6 +1333,7 @@ div.html {
   
   .navigation-visibility .slide-icon.active {
     background: #4285F4;
+    z-index: 2;
   }
 
   @media (max-width: 900px){

@@ -13,6 +13,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Step 1: Retrieve custom identifier from the URL
+//Made Changes to push it on the repo.
 const urlParams = new URLSearchParams(window.location.search);
 const customIdentifier = urlParams.get('user');
 var userId = customIdentifier;
