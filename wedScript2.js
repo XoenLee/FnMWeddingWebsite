@@ -145,7 +145,7 @@ function displayConfirmationMessage(userId, attending) {
           confirmationMessage.innerHTML = `<img src="photos/lineDivider3-dark.png"></img> <p>Thank you for confirming your attendance!</p><p>We've reserved <strong style="font-weight:600;"> 
           ${updatedConfirmedSeats} seat/s </strong>just for you!</p><p>Get ready for an unforgettable celebration – 
           can't wait to see you there!</p><br><p>Kindly download using the button below; this will serve as your entry pass to the venue.
-          </p> <p style="padding-top: 20px; font-weight:600;">#FinalLIEgettingMarriedToDEK</p><p>Reserved for: ${customIdentifier}</p><button id="captureButton" class="styledButton" data-html2canvas-ignore="true">Download Pass</button>
+          </p> <p>If the download link isn't working for you, please take a screenshot of this message instead.</p> <p style="padding-top: 20px; font-weight:600;">#FinalLIEgettingMarriedToDEK</p><p>Reserved for: ${customIdentifier}</p><button id="captureButton" class="styledButton" data-html2canvas-ignore="true">Download Pass</button>
           `;
         
           document.getElementById('captureButton').addEventListener('click', function() {
