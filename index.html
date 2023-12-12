@@ -431,7 +431,9 @@
         <div class="rsvp-container">
             <h2>RSVP</h2>
             <h3>Reserve Your Seat Here.</h3>
-            <p>Please RSVP by January 22, 2023. We can't wait to celebrate with you!</p>
+            <p>Please RSVP by January 22, 2024. We can't wait to celebrate with you!</p>
+            <p><strong>Event Guidelines:</strong></p>
+            <p>As much as we adore your little bundles of joy, our venue is throwing a party with a guest list tighter than a hug from a teddy bear. We're keeping it <strong>adults-only</strong> this time due to limited spots, but rest assured, your kiddos are with us in spirit!</p>
             <form id="seatForm" action="" method="post">
                 <div class="form-column">
                     <div class="input-group">
@@ -456,8 +458,6 @@
             
                 <div class="form-column2">
 
-                    
-                    
                     <div class="input-group" id="cont-invitedBy">
                         <label class="invitedBy" for="invitedBy">Invited By:</label>
                         <input type="text" id="invitedBy" name="invitedBy" readonly>
@@ -469,8 +469,16 @@
                         <input type="number" id="seatsConfirmed" name="seatsConfirmed">
                     </div>
                 </div>
-            
-                <button type="submit" value="submit">Submit</button>
+                <button id="submitForm" type="submit" value="submit">Submit</button>
+            </form>
+
+            <form id="seatNamesForm" action="" method="post">
+                <div class="input-group" id="userName">
+                    <label class="userName-label" for="userName-display">Name:</label>
+                    <input type="text" id="userName-display" name="userName-display">
+                </div>
+
+                <button id="submitSeat" type="submit" value="submitSeat">Submit</button>
             </form>
             <div id="confirmationMessage">
             </div>

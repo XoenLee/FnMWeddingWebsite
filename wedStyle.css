@@ -736,6 +736,14 @@ div.rsvp-container select {
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+#seatNamesForm input {
+    margin-bottom: 5px;
+}
+
+#seatNamesForm > input:last-of-type {
+    margin-bottom: 20px;
+}
+
 div.rsvp-container button {
     width: 100%; /* Make the button fill the available width */
     padding: 10px; /* Add padding for better appearance */
@@ -1423,6 +1431,10 @@ div.gallery-btns button:disabled {
     display: none;
 }
 
+#seatNamesForm {
+    display: none;
+}
+
 #confirmationMessage {
     padding: 20px;
 }
@@ -1435,4 +1447,9 @@ button.styledButton {
 #confirmationMessage img {
     width: 20vw;
     padding-bottom: 20px;
+}
+
+#userName input {
+    color: #765830;
+    font-family: 'Lora';
 }
