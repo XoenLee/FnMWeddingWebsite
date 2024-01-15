@@ -125,62 +125,62 @@ const x = setInterval(function() {
 // map 
 //
 
-function initMap() {
-    var directionsService = new google.maps.DirectionsService();
-    var directionsRenderer = new google.maps.DirectionsRenderer();
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: { lat: 14.456895, lng: 120.944126 }
-    });
+// function initMap() {
+//     var directionsService = new google.maps.DirectionsService();
+//     var directionsRenderer = new google.maps.DirectionsRenderer();
+//     var map = new google.maps.Map(document.getElementById('map'), {
+//         zoom: 7,
+//         center: { lat: 14.456895, lng: 120.944126 }
+//     });
     
-    // Add a click event listener to the map
-    map.addListener('click', function(event) {
-        // Open Google Maps app with directions from clicked location to the destination
-        var url = 'https://www.google.com/maps/dir/?api=1&origin=' +
-                event.latLng.lat() + ',' + event.latLng.lng() +
-                '&destination=' + endMarker.getPosition().lat() + ',' + endMarker.getPosition().lng();
-        window.open(url, '_blank');
-    });
+//     // Add a click event listener to the map
+//     map.addListener('click', function(event) {
+//         // Open Google Maps app with directions from clicked location to the destination
+//         var url = 'https://www.google.com/maps/dir/?api=1&origin=' +
+//                 event.latLng.lat() + ',' + event.latLng.lng() +
+//                 '&destination=' + endMarker.getPosition().lat() + ',' + endMarker.getPosition().lng();
+//         window.open(url, '_blank');
+//     });
 
-    directionsRenderer.setMap(map);
+//     directionsRenderer.setMap(map);
 
-    // Create a marker for the starting point with a label
-    var startMarker = new google.maps.Marker({
-        position: { lat: 14.536262, lng: 120.982006 },
-        map: map,
-    });
+//     // Create a marker for the starting point with a label
+//     var startMarker = new google.maps.Marker({
+//         position: { lat: 14.536262, lng: 120.982006 },
+//         map: map,
+//     });
 
-    // Create a marker for the destination with a label
-    var endMarker = new google.maps.Marker({
-        position: { lat: 14.402908, lng: 120.903986 },
-        map: map,
-    });
+//     // Create a marker for the destination with a label
+//     var endMarker = new google.maps.Marker({
+//         position: { lat: 14.402908, lng: 120.903986 },
+//         map: map,
+//     });
 
-    // Define the end location
-    var start = startMarker.getPosition();
-    var end = endMarker.getPosition(); // Use the marker's position as the destination
+//     // Define the end location
+//     var start = startMarker.getPosition();
+//     var end = endMarker.getPosition(); // Use the marker's position as the destination
 
-    // Create a request object for directions
-    var request = {
-        origin: start, // Use the starting marker's position as the origin
-        destination: end,
-        travelMode: 'DRIVING'
-    };
+//     // Create a request object for directions
+//     var request = {
+//         origin: start, // Use the starting marker's position as the origin
+//         destination: end,
+//         travelMode: 'DRIVING'
+//     };
 
-    // Use the Directions Service to get the route
-    directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
-            // Display the route on the map
-            directionsRenderer.setDirections(result);
-        } else {
-            console.error('Error:', status);
-        }
-    });
-}
+//     // Use the Directions Service to get the route
+//     directionsService.route(request, function(result, status) {
+//         if (status == 'OK') {
+//             // Display the route on the map
+//             directionsRenderer.setDirections(result);
+//         } else {
+//             console.error('Error:', status);
+//         }
+//     });
+// }
 
-window.onload = function () {
-    initMap();
-};
+// window.onload = function () {
+//     initMap();
+// };
 
 // slider 
 

@@ -483,7 +483,6 @@ div.quotes {
 /* story section */
 
 div.story-container {
-
     display: flex;
     justify-content: center;
     text-align: center;
@@ -676,7 +675,7 @@ div.event-header {
 
 /* map */
 
-div.map-container {
+div.map-container, div.googleMap {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -944,19 +943,6 @@ div.optional {
     display: none;
 }
   /* end of gallery */
-
-
-  /* map  */
-.google-maps {
-    display: flex;
-    justify-content: center;
-}
-
-#map {
-    height: 400px; /* Set the height of the map container */
-    width: 50%;   /* Set the width of the map container */
-    border-radius: 15px;
-}
 
   /* others    */
 hr {
