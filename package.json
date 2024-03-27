@@ -1,6 +1,9 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "csv-parser": "^3.0.0",
+=======
+>>>>>>> fe09a3bd44ca8f9eefa95d8b15258bdc9141f678
     "firebase-admin": "^12.0.0"
   }
 }
